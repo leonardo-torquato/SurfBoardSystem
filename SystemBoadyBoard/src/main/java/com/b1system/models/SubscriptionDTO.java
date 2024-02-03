@@ -1,6 +1,5 @@
 package com.b1system.models;
 
-import com.b1system.utils.UnidadeFederacao;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,7 +21,7 @@ public class SubscriptionDTO {
     private String fullName;
     private String nickname;
     private LocalDate birthDate;
-    private String siglaFederation;
+    private String siglaFederacao;
     private byte[] picture;
 
 }

@@ -15,6 +15,8 @@ import lombok.NoArgsConstructor;
 @Table(name = "event")
 public class Event {
 
+    //TODO: definir tamanho maximo de nome, descricao, etc
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
