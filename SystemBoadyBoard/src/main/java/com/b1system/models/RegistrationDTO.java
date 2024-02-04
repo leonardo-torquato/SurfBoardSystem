@@ -1,7 +1,13 @@
 package com.b1system.models;
 
+import jakarta.validation.constraints.NotEmpty;
+
 public class RegistrationDTO {
+
+    @NotEmpty
     private String username;
+
+    @NotEmpty
     private String password;
 
     public RegistrationDTO(){

@@ -29,8 +29,8 @@ public class CategoryService {
 
     private Category categoryDTOtoCategory(CategoryDTO categoryDTO){
 
-        Event event = eventRepository.findById(categoryDTO.getEvent_id()).orElseThrow(() ->
-                new EventNotFoundException("Evento de id " + categoryDTO.getEvent_id() + " não encontrado."));
+        Event event = eventRepository.findById(categoryDTO.getEventId()).orElseThrow(() ->
+                new EventNotFoundException("Evento de id " + categoryDTO.getEventId() + " não encontrado."));
 
         return Category.builder()
                 .eventId(event)
@@ -45,7 +45,7 @@ public class CategoryService {
         Integer event_id = category.getEventId().getId();
 
         return CategoryDTO.builder()
-                .event_id(event_id)
+                .eventId(event_id)
                 .description(category.getDescription())
                 .slots(category.getRemainingSlots())
                 .price(category.getPrice())

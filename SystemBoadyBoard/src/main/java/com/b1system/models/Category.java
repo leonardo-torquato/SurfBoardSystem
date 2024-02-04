@@ -50,4 +50,8 @@ public class Category {
         }
     }
 
+    public void openSlot() {
+        remainingSlots++;
+    }
+
 }

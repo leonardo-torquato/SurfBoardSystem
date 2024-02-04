@@ -54,6 +54,9 @@ public class SecurityConfiguration {
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> {
                 auth.requestMatchers("/auth/**").permitAll();
+                auth.requestMatchers("/subscription/**").permitAll();
+                auth.requestMatchers("/event/**").permitAll(); //MUDAR
+                auth.requestMatchers("/category/**").permitAll(); //MUDAR
                 auth.requestMatchers("/admin/**").hasRole("ADMIN");
                 auth.requestMatchers("/user/**").hasAnyRole("ADMIN", "USER");
                 auth.anyRequest().authenticated();

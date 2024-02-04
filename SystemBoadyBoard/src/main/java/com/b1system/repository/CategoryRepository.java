@@ -10,5 +10,7 @@ import java.util.Set;
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
     Optional<Category> findById (Integer id);
-    Optional<Set<Category>> findAllById (Set<Integer> ids);
+    //Optional<Set<Category>> findAllById (Set<Integer> ids);
+
+    //public Optional<List<Category>> getCategoriesBy
 }

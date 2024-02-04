@@ -1,6 +1,6 @@
 package com.b1system.models;
 
-import com.b1system.utils.Status;
+import com.b1system.utils.EventStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,6 +29,6 @@ public class Event {
 
     @Column(name = "status", nullable = false) // Aberta, fechada, em progresso, etc
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private EventStatus status;
 
 }

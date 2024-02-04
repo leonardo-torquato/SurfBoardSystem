@@ -1,6 +1,6 @@
 package com.b1system.utils;
 
-public enum Status {
+public enum EventStatus {
     OPEN,
     CLOSED,
     IN_PROGRESS

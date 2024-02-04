@@ -1,7 +1,13 @@
 package com.b1system.models;
 
+import jakarta.validation.constraints.NotEmpty;
+
 public class LoginResponseDTO {
+
+    @NotEmpty
     private ApplicationUser user;
+
+    @NotEmpty
     private String jwt;
 
     public LoginResponseDTO(){
