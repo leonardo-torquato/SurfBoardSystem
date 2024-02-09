@@ -9,8 +9,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.b1system.models.ApplicationUser;
-import com.b1system.models.Role;
+import com.b1system.models.entities.User;
+import com.b1system.models.entities.Role;
 import com.b1system.repository.RoleRepository;
 import com.b1system.repository.UserRepository;
 
@@ -30,7 +30,7 @@ public class BoadyBoardSystemApp {
 			Set<Role> roles = new HashSet<>();
 			roles.add(adminRole);
 
-			ApplicationUser admin = new ApplicationUser(1, "admin", passwordEncode.encode("password"), roles);
+			User admin = new User(1, "admin", passwordEncode.encode("password"), roles);
 
 			userRepository.save(admin);
 		};

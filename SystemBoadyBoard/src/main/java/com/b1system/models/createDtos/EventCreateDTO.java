@@ -1,6 +1,5 @@
-package com.b1system.models;
+package com.b1system.models.createDtos;
 
-import com.b1system.utils.EventStatus;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,14 +10,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class EventDTO {
+public class EventCreateDTO {
 
     @NotEmpty
     private String name;
 
     @NotEmpty
     private String description;
-
-    //private EventStatus status;
 
 }

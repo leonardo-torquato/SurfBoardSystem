@@ -1,6 +1,6 @@
 package com.b1system.repository;
 
-import com.b1system.models.Subscription;
+import com.b1system.models.entities.Subscription;
 import com.b1system.utils.SubscriptionStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -1,4 +1,4 @@
-package com.b1system.models;
+package com.b1system.models.entities;
 
 import org.springframework.security.core.GrantedAuthority;
 

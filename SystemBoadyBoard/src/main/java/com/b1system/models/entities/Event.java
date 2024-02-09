@@ -1,4 +1,4 @@
-package com.b1system.models;
+package com.b1system.models.entities;
 
 import com.b1system.utils.EventStatus;
 import jakarta.persistence.*;

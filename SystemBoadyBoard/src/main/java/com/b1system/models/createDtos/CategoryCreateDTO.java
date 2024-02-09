@@ -1,4 +1,4 @@
-package com.b1system.models;
+package com.b1system.models.createDtos;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CategoryDTO {
+public class CategoryCreateDTO {
 
     @NotNull
     private Integer eventId;

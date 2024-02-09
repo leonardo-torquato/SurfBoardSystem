@@ -1,6 +1,6 @@
 package com.b1system.controllers;
 
-import com.b1system.models.EventDTO;
+import com.b1system.models.createDtos.EventCreateDTO;
 import com.b1system.services.EventService;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +17,7 @@ public class EventController {
     }
 
     @PostMapping("/create")
-    public EventDTO createEvent(@Validated @RequestBody EventDTO body){
+    public EventCreateDTO createEvent(@Validated @RequestBody EventCreateDTO body){
         return eventService.create(body);
     }
 

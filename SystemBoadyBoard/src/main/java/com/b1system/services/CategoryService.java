@@ -1,9 +1,9 @@
 package com.b1system.services;
 
 import com.b1system.exceptions.EventNotFoundException;
-import com.b1system.models.Category;
-import com.b1system.models.CategoryDTO;
-import com.b1system.models.Event;
+import com.b1system.models.entities.Category;
+import com.b1system.models.createDtos.CategoryCreateDTO;
+import com.b1system.models.entities.Event;
 import com.b1system.repository.CategoryRepository;
 import com.b1system.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +21,13 @@ public class CategoryService {
         this.eventRepository = eventRepository;
     }
 
-    public CategoryDTO create(final CategoryDTO categoryDTO){
+    public CategoryCreateDTO create(final CategoryCreateDTO categoryDTO){
         final Category category = categoryDTOtoCategory(categoryDTO);
         final Category savedCategory = categoryRepository.save(category);
         return categoryToCategoryDTO(savedCategory);
     }
 
-    private Category categoryDTOtoCategory(CategoryDTO categoryDTO){
+    private Category categoryDTOtoCategory(CategoryCreateDTO categoryDTO){
 
         Event event = eventRepository.findById(categoryDTO.getEventId()).orElseThrow(() ->
                 new EventNotFoundException("Evento de id " + categoryDTO.getEventId() + " não encontrado."));
@@ -41,10 +41,10 @@ public class CategoryService {
                 .build();
     }
 
-    private CategoryDTO categoryToCategoryDTO(Category category){
+    private CategoryCreateDTO categoryToCategoryDTO(Category category){
         Integer event_id = category.getEventId().getId();
 
-        return CategoryDTO.builder()
+        return CategoryCreateDTO.builder()
                 .eventId(event_id)
                 .description(category.getDescription())
                 .slots(category.getRemainingSlots())

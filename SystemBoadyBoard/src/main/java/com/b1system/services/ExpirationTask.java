@@ -1,6 +1,6 @@
 package com.b1system.services;
 
-import com.b1system.models.Category;
+import com.b1system.models.entities.Category;
 import com.b1system.repository.SubscriptionRepository;
 import com.b1system.utils.SubscriptionStatus;
 import jakarta.transaction.Transactional;

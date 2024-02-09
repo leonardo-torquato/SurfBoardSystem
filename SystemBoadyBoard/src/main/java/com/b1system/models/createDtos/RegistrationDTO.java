@@ -1,32 +1,28 @@
-package com.b1system.models;
+package com.b1system.models.createDtos;
 
-import jakarta.persistence.ElementCollection;
+import com.b1system.utils.ValidEstadoSigla;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.br.CPF;
-
-import java.time.LocalDate;
-import java.util.Set;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class SubscriptionDTO {
+public class RegistrationDTO {
 
-    //TODO: mensagens de erro
-
-    @NotNull
-    private Integer eventId;
+    //TODO: definir tamanho minimo e maximo para cada campo
 
     @NotEmpty
-    @ElementCollection
-    private Set<Integer> categoriesId;
+    private String username;
+
+    @NotEmpty
+    private String notEncodedPassword;
 
     @NotEmpty
     @CPF
@@ -42,12 +38,13 @@ public class SubscriptionDTO {
     @NotEmpty
     private String nickname;
 
-    @NotNull
-    private LocalDate birthDate;
+    @NotEmpty
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private String birthDate;
 
     @NotEmpty
+    @ValidEstadoSigla
     private String siglaFederacao;
 
-    private byte[] picture;
 
 }

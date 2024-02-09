@@ -1,8 +1,12 @@
 package com.b1system.services;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.b1system.models.createDtos.LoginDTO;
+import com.b1system.models.createDtos.RegistrationDTO;
+import com.b1system.utils.UnidadeFederacao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,9 +16,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.b1system.models.ApplicationUser;
-import com.b1system.models.LoginResponseDTO;
-import com.b1system.models.Role;
+import com.b1system.models.entities.User;
+import com.b1system.models.dtos.LoginResponseDTO;
+import com.b1system.models.entities.Role;
 import com.b1system.repository.RoleRepository;
 import com.b1system.repository.UserRepository;
 
@@ -22,43 +26,57 @@ import com.b1system.repository.UserRepository;
 @Transactional
 public class AuthenticationService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
+    private final TokenService tokenService;
 
     @Autowired
-    private RoleRepository roleRepository;
+    public AuthenticationService(final UserRepository userRepository,
+                                 final RoleRepository roleRepository,
+                                 final PasswordEncoder passwordEncoder,
+                                 final AuthenticationManager authenticationManager,
+                                 final TokenService tokenService){
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.authenticationManager = authenticationManager;
+        this.tokenService = tokenService;
+    }
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    public User registerUser(RegistrationDTO registrationDTO){
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private TokenService tokenService;
-
-    public ApplicationUser registerUser(String username, String password){
-
-        String encodedPassword = passwordEncoder.encode(password);
+        String encodedPassword = passwordEncoder.encode(registrationDTO.getNotEncodedPassword());
         Role userRole = roleRepository.findByAuthority("USER").get();
 
         Set<Role> authorities = new HashSet<>();
 
         authorities.add(userRole);
 
-        return userRepository.save(new ApplicationUser(0, username, encodedPassword, authorities));
+        return userRepository.save(User.builder()
+                .username(registrationDTO.getUsername())
+                .password(encodedPassword)
+                .cpf(registrationDTO.getCpf())
+                .email(registrationDTO.getEmail())
+                .fullName(registrationDTO.getFullName())
+                .nickname(registrationDTO.getNickname())
+                .birthDate(LocalDate.parse(registrationDTO.getBirthDate()))
+                .federacao(UnidadeFederacao.fromSigla(registrationDTO.getSiglaFederacao()))
+                .authorities(authorities).build()
+        );
     }
 
-    public LoginResponseDTO loginUser(String username, String password){
+    public LoginResponseDTO loginUser(LoginDTO loginDTO){
 
         try{
             Authentication auth = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(username, password)
+                new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getNotEncodedPassword())
             );
 
             String token = tokenService.generateJwt(auth);
 
-            return new LoginResponseDTO(userRepository.findByUsername(username).get(), token);
+            return new LoginResponseDTO(userRepository.findByUsername(loginDTO.getUsername()).get(), token);
 
         } catch(AuthenticationException e){
             return new LoginResponseDTO(null, "");

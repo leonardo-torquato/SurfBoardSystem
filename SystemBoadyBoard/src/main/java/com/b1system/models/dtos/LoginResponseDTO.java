@@ -1,11 +1,12 @@
-package com.b1system.models;
+package com.b1system.models.dtos;
 
+import com.b1system.models.entities.User;
 import jakarta.validation.constraints.NotEmpty;
 
 public class LoginResponseDTO {
 
     @NotEmpty
-    private ApplicationUser user;
+    private User user;
 
     @NotEmpty
     private String jwt;
@@ -14,16 +15,16 @@ public class LoginResponseDTO {
         super();
     }
 
-    public LoginResponseDTO(ApplicationUser user, String jwt){
+    public LoginResponseDTO(User user, String jwt){
         this.user = user;
         this.jwt = jwt;
     }
 
-    public ApplicationUser getUser(){
+    public User getUser(){
         return this.user;
     }
 
-    public void setUser(ApplicationUser user){
+    public void setUser(User user){
         this.user = user;
     }
 
