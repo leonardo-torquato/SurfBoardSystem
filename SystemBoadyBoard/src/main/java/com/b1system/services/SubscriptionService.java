@@ -3,6 +3,7 @@ package com.b1system.services;
 import com.b1system.exceptions.EventNotFoundException;
 import com.b1system.exceptions.UserNotFoundException;
 import com.b1system.models.createDtos.SubscriptionCreateDTO;
+import com.b1system.models.dtos.SubscriptionDTO;
 import com.b1system.models.entities.User;
 import com.b1system.models.entities.Category;
 import com.b1system.models.entities.Event;
@@ -43,7 +44,7 @@ public class SubscriptionService {
     }
 
     @Transactional
-    public SubscriptionCreateDTO create(SubscriptionCreateDTO subscriptionDTO){
+    public SubscriptionDTO create(SubscriptionCreateDTO subscriptionDTO){
         final Subscription subscription = subscriptionDTOtoSubscription(subscriptionDTO);
 
         subscription.setCreatedAt(new Timestamp(System.currentTimeMillis()));
@@ -58,7 +59,7 @@ public class SubscriptionService {
     }
 
     @Transactional
-    public SubscriptionCreateDTO paid(Subscription subscription){
+    public SubscriptionDTO paid(Subscription subscription){
         subscription.setStatus(SubscriptionStatus.PAID);
         Subscription updatedSubscription = subscriptionRepository.save(subscription);
         return subscriptionToSubscriptionDTO(updatedSubscription);
@@ -66,21 +67,21 @@ public class SubscriptionService {
 
     // get methods
 
-    public List<SubscriptionCreateDTO> getALlSubscriptionsDTO(){
+    public List<SubscriptionDTO> getALlSubscriptionsDTO(){
         List<Subscription> subscriptions = subscriptionRepository.findAll();
         return subscriptions.stream()
                 .map(this::subscriptionToSubscriptionDTO)
                 .collect(Collectors.toList());
     }
 
-    public List<SubscriptionCreateDTO> getPaidSubscriptionsDTO(){
+    public List<SubscriptionDTO> getPaidSubscriptionsDTO(){
         List<Subscription> subscriptions = subscriptionRepository.findByStatus(SubscriptionStatus.PAID);
         return subscriptions.stream()
                 .map(this::subscriptionToSubscriptionDTO)
                 .collect(Collectors.toList());
     }
 
-    public List<SubscriptionCreateDTO> getUserSubscriptionsDTO(String fullName){
+    public List<SubscriptionDTO> getUserSubscriptionsDTO(String fullName){
         List<Subscription> subscriptions = subscriptionRepository.findByFullName(fullName);
         return subscriptions.stream()
                 .map(this::subscriptionToSubscriptionDTO)
@@ -120,7 +121,7 @@ public class SubscriptionService {
                 .build();
     }
 
-    private SubscriptionCreateDTO subscriptionToSubscriptionDTO(Subscription subscription){
+    private SubscriptionDTO subscriptionToSubscriptionDTO(Subscription subscription){
         Integer eventId = subscription.getEventId().getId();
 
         Set<Integer> categoriesIds = new HashSet<>();
@@ -130,7 +131,7 @@ public class SubscriptionService {
 
         Integer userId = subscription.getUser().getUserId();
 
-        return SubscriptionCreateDTO.builder()
+        return SubscriptionDTO.builder()
                 .eventId(eventId)
                 .categoriesId(categoriesIds)
                 .userId(userId)

@@ -12,11 +12,15 @@ import com.b1system.repository.UserRepository;
 @Service
 public class UserService implements UserDetailsService {
 
-    @Autowired
-    private PasswordEncoder encoder;
+    private final PasswordEncoder encoder;
+    private final UserRepository userRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    public UserService(PasswordEncoder encoder, UserRepository userRepository) {
+        this.encoder = encoder;
+        this.userRepository = userRepository;
+    }
+    
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

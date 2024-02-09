@@ -1,10 +1,13 @@
 package com.b1system.controllers;
 
 import com.b1system.models.createDtos.CategoryCreateDTO;
+import com.b1system.models.dtos.CategoryDTO;
 import com.b1system.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/category")
@@ -19,9 +22,13 @@ public class CategoryController {
     }
 
     @PostMapping("/create")
-    public CategoryCreateDTO createCategory(@Validated @RequestBody CategoryCreateDTO body) {
-        System.out.println("AQUIII");
+    public CategoryDTO createCategory(@Validated @RequestBody CategoryCreateDTO body) {
         return categoryService.create(body);
+    }
+
+    @GetMapping("/get/{eventId}")
+    public List<CategoryDTO> createCategory(@Validated @RequestBody Integer eventId) {
+        return categoryService.getAllByEventId(eventId);
     }
 
 }

@@ -1,6 +1,7 @@
 package com.b1system.controllers;
 
 import com.b1system.models.createDtos.SubscriptionCreateDTO;
+import com.b1system.models.dtos.SubscriptionDTO;
 import com.b1system.services.SubscriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -24,7 +25,7 @@ public class SubscriptionController {
     }
 
     @PostMapping("/create")
-    public SubscriptionCreateDTO createSubscription(@Validated @RequestBody SubscriptionCreateDTO body){
+    public SubscriptionDTO createSubscription(@Validated @RequestBody SubscriptionCreateDTO body){
         return subscriptionService.create(body);
     }
 
